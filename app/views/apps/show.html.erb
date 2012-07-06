@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @app.name %></td>
+  </tr>
+  <tr>
+    <td>URL</td>
+    <td><%= @app_info.appUrl %></td>
+  </tr>
+  <tr>
+    <td>Provider</td>
+    <td><%= @app_info.paasProvider %></td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><%= @app_info.appStatus %></td>
+  </tr>
+  <tr>
+    <td>Repository</td>
+    <td><%= @app.repository %></td>
+  </tr>
+  <tr>
+    <td>Instances</td>
+    <td><%= @app_info.appInstances %></td>
+  </tr>
+</table>
+
+<h2>Instances</h2>
+<p>
+<%= number_field_tag 'instances', @app_info.appInstances, :min => 1, :step => 1 %>
+<%=  %>
+</p>
+
+<%= link_to 'Edit', edit_app_path(@app.name) %> |
+<%= link_to 'Back', apps_path %>

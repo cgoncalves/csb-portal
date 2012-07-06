@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Cloud Service Broker</title>
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<!--  obriga ao broser IE correr esta página usando o modo de documento mais moderno -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="X-UA-Compatible"content="IE=EmulateIE7" />
+		<%= stylesheet_link_tag "main" %>
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+
+		<div id="header">
+			<div class="boasVindas">
+				<p>
+					Welcome, Carlos Gonçalves  | <a href="#">Logout</a>
+				</p>
+			</div>
+			<div id="menuCima">
+
+				<div id="itemCimaEsqSel">
+					<a href="#" class="itemSel">Apps</a>
+					<%= image_tag "separador.png", :style => "float:right;" %>
+				</div>
+
+				<div id="itemCima">
+					<a href="#" class="itemCima">Reports</a>
+					<%= image_tag "separador.png", :style => "float:right;" %>
+				</div>
+
+				<div id="itemCima">
+					<a href="#" class="itemCima">Billings</a>
+					<%= image_tag "separador.png", :style => "float:right;" %>
+				</div>
+
+				<div id="itemCimaDir">
+					<a href="#" class="itemCima">Support</a>
+				</div>
+
+			</div>
+			<div class="csb">
+				Cloud Service Broker
+			</div>
+		</div>
+
+		<div id="menu">
+			<div id="home">
+				<a href="#" class="home"></a>
+			</div>
+
+			<%= image_tag "separador.png", :style => "float:left;" %>
+
+			<div id="item">
+				<a href="#" class="item">Features</a>
+				<%= image_tag "separador.png", :style => "float:right;" %>
+			</div>
+
+			<div id="item">
+
+				<a href="#" class="item">Pricing</a>
+				<%= image_tag "separador.png", :style => "float:right;" %>
+			</div>
+
+			<div id="item">
+				<a href="#" class="item">Partners</a>
+				<%= image_tag "separador.png", :style => "float:right;" %>
+			</div>
+
+			<div id="item">
+				<a href="#" class="item">Blog</a>
+				<%= image_tag "separador.png", :style => "float:right;" %>
+			</div>
+
+			<div id="item">
+				<a href="#" class="item">About</a>
+				<%= image_tag "separador.png", :style => "float:right;" %>
+			</div>
+
+		</div>
+
+		<div id="content" >
+
+			<%= yield %>
+
+		</div>
+		<div class="footer">
+			<p>
+				Cloud Service Broker [ © 2012 PT Inovação S.A. - Todos os direitos reservados ]
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<%= form_for @app, :url => apps_step2_path do |f| %>
+  <% if @app.errors.any? %>
+  <div id="error_explanation">
+      <h2><%= pluralize(@app.errors.count, "error") %> prohibited this app from being saved:</h2>
+  
+      <ul>
+          <% @app.errors.full_messages.each do |msg| %>
+          <li>
+              <%= msg %>
+          </li>
+          <% end %>
+      </ul>
+  </div>
+  <% end %>
+  
+  <h1>New Application<span>Step 1</span></h1>
+  Choose a name for your application
+  <p>
+  <%= f.text_field :name %>
+  </p>
+  
+  <h4>Runtimes</h4>
+  <%= select('manifest', 'runtime', @runtimes.each.map {|r| ["#{r['name']} #{r['version']}", r.to_json] }.sort, {}) %>
+  
+  <br />
+  <h4>Frameworks</h4>
+  <%= select('manifest', 'framework', @frameworks.each.map {|f| ["#{f['name']} #{f['version']}", f.to_json] }.sort, {}) %>
+  
+  </br>
+  <h4>Services</h4>
+  <% @services.each do |s| %>
+    <%= check_box_tag 'services[]', s.to_json %><%= "#{s['name']} #{s['version']}" %>
+    <br/>
+  <% end %>
+  
+  <div id="steps">
+      <%= f.submit "Next", :class => 'criar' %> or <%= link_to 'Back', apps_path %>
+  </div>
+<% end %>
