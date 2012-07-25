@@ -3,66 +3,66 @@
 Choose where to deploy <b><%= @app.name %></b>?
 
 <div id="vertical">
-    <div class="vertical">
+  <div class="vertical">
 
-    </div>
-    <div class="vertical">
+  </div>
+  <div class="vertical">
 
-    </div>
+  </div>
 </div>
 
 <table class="other" id="alternatecolor">
-    <%= form_for @app do |f| %>
+  <%= form_for @app do |f| %>
     <%= f.hidden_field :manifest, :value => @manifest.to_json %>
     <%= f.hidden_field :appId, :value => @app.name %>
 
     <tr>
-        <th/>
+      <th/>
         <% @providers.each do |p| %>
-        <th><%= p['name'] %></th>
+          <th><%= p['name'] %></th>
         <% end %>
-    </tr>
+      </tr>
 
-    <tr>
+      <tr>
         <td><%= "#{@manifest.runtime['name']} #{@manifest.runtime['version']}" %></td>
         <% @providers.each do |p| %>
-        <td><%= p['runtimes'].include?(@manifest.runtime) ? image_tag("yes.png") : image_tag("no.png") %></td>
+          <td><%= p['runtimes'].include?(@manifest.runtime) ? image_tag("yes.png") : image_tag("no.png") %></td>
         <% end %>
-    </tr>
+      </tr>
 
-    <tr>
+      <tr>
         <td><%= "#{@manifest.framework['name']} #{@manifest.framework['version']}" %></td>
         <% @providers.each do |p| %>
-        <td><%= p['frameworks'].include?(@manifest.framework) ? image_tag("yes.png") : image_tag("no.png") %></td>
+          <td><%= p['frameworks'].include?(@manifest.framework) ? image_tag("yes.png") : image_tag("no.png") %></td>
         <% end %>
-    </tr>
+      </tr>
 
-    <% @manifest.services.each do |s| %>
-    <tr>
-        <td><%= "#{s['name']} #{s['version']}" %></td>
-        <% @providers.each do |p| %>
-        <td><%= p['services'].include?(s) ? image_tag("yes.png") : image_tag("no.png") %></td>
-        <% end %>
-    </tr>
-    <% end %>
+      <% @manifest.services.each do |s| %>
+        <tr>
+          <td><%= "#{s['name']} #{s['version']}" %></td>
+          <% @providers.each do |p| %>
+            <td><%= p['services'].include?(s) ? image_tag("yes.png") : image_tag("no.png") %></td>
+          <% end %>
+        </tr>
+      <% end %>
 
-    <tr>
+      <tr>
         <td><b>Score</b></td>
         <% @providers.each do |p| %>
-        <td><%= p['score'] %> %</td>
+          <td><%= p['score'] %> %</td>
         <% end %>
-    </tr>
+      </tr>
 
-    <tr>
+      <tr>
         <td><b>Deploy to</b></td>
         <% @providers.each do |p| %>
-        <td><%= radio_button("app", "provider", p['name']) %></td>
+          <td><%= radio_button("app", "provider", p['name']) %></td>
         <% end %>
-    </tr>
+      </tr>
 
-</table>
+    </table>
 
-<div id="steps">
-    <%= f.submit "Done!", :class => 'criar' %> or <%= link_to 'Back', apps_path %>
-</div>
-<% end %>
+    <div id="steps">
+      <%= f.submit "Done!", :class => 'criar' %> or <%= link_to 'Back', apps_path %>
+    </div>
+  <% end %>

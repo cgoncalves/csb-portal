@@ -4,9 +4,9 @@
       <h2><%= pluralize(@app.errors.count, "error") %> prohibited this app from being saved:</h2>
 
       <ul>
-      <% @app.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @app.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -17,17 +17,17 @@
 
     <p><b>Runtimes:</b></p>
     <% @runtimes.each do |r| %>
-  	  <%= check_box_tag 'runtimes[]', r['name'] %><%= r['name'] %><br/>
+      <%= check_box_tag 'runtimes[]', r['name'] %><%= r['name'] %><br/>
     <% end %>
-  
+
     <p><b>Frameworks:</b></p>
     <% @frameworks.each do |f| %>
-  	  <%= check_box_tag 'frameworks[]', f['name'] %><%= f['name'] %><br/>
+      <%= check_box_tag 'frameworks[]', f['name'] %><%= f['name'] %><br/>
     <% end %>
-  
+
     <p><b>Services:</b></p>
     <% @services.each do |s| %>
-  	  <%= check_box_tag 'services[]', s['name'] %><%= s['name'] %><br/>
+      <%= check_box_tag 'services[]', s['name'] %><%= s['name'] %><br/>
     <% end %> 
 
     <%= f.submit %>
