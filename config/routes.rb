@@ -5,6 +5,7 @@ CsbPortal::Application.routes.draw do
 	  get 'start'
 	  get 'stop'
 	  get 'restart'
+	  get 'log'
       post 'scale/:instances', :action => 'scale'
     end
   end

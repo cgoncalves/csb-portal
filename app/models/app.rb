@@ -8,6 +8,7 @@ require 'applicationrestartresponse'
 require 'applicationdeleteresponse'
 require 'applicationstatusresponse'
 require 'applicationinforesponse'
+require 'applicationlogsresponse'
 
 class App < CsbModel
   attr_accessor :id, :name, :url, :provider, :status, :repository, :instances
@@ -100,6 +101,12 @@ class App < CsbModel
     r = CsbModel.conn.get "/csb/rest/apps/#{name}/info.json"
     raise "#{r.status}: #{ErrorResponse.new(r.body).message}" unless r.success?
     ApplicationInfoResponse.new(r.body)
+  end
+
+  def log
+    r = CsbModel.conn.get "/csb/rest/apps/#{name}/log.json"
+    raise "#{r.status}: #{ErrorResponse.new(r.body).message}" unless r.success?
+    ApplicationLogsResponse.new(r.body)
   end
 
 end

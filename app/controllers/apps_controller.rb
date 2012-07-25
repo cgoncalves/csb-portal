@@ -162,6 +162,16 @@ class AppsController < ApplicationController
     end    
   end
 
+  def log
+    @app = App.find(params[:id])
+    @log = @app.log.appLog
+
+    respond_to do |format|
+      format.html { render :layout => false } # log.html.erb
+      format.json { render json: @log }
+    end
+  end
+
   def add_service
   end
 
