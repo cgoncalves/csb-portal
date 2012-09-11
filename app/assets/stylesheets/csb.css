@@ -1,0 +1,32 @@
+[class^="cloud-icon-"],
+[class*=" cloud-icon-"] {
+  display: inline-block;
+  width: 113px;
+  height: 83px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("../assets/clouds-01.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
+[class^="cloud-icon-"]:last-child,
+[class*=" cloud-icon-"]:last-child {
+  *margin-left: 0;
+}
+
+.cloud-icon-full-border-full {
+  background-position: 0      0;
+}
+
+.cloud-icon-full-border-reload {
+  background-position: -158px      0;
+}
+
+.cloud-icon-full-border-plus {
+  background-position: -316px      0;
+}
+
+.cloud-icon-border-line {
+  background-position: 0      -256px;
+}

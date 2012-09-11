@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
-gem 'faraday', '0.8.1'
-gem 'faraday_middleware', '0.8.7'
+gem 'rails', '3.2.8'
+gem 'faraday', '0.8.4'
+gem 'faraday_middleware', '0.8.8'
+gem "hashie", :git => "git://github.com/intridea/hashie.git", :branch => "master"
+gem "google-code-prettify-rails"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -18,13 +20,13 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
-  gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-ui-rails'
 end
 
 gem 'jquery-rails'
+gem 'jquery-spinner-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

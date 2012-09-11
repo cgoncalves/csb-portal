@@ -1,0 +1,18 @@
+<%= form_tag( {action: 'create'}, method: :post) do %>
+  <%= hidden_field_tag 'manifest', @manifest.to_json %>
+  <%= hidden_field_tag 'id', @id %>
+  <% @providers.each do |p| %>
+    <div class="row span2">
+      <h2><%= p['name'].humanize %></h2>
+      <h1>$219<small>/mo</small></h1>
+      <ul>
+        <li>Up to 150 Operators</li>
+        <li>CRM Integration</li>
+        <li>Groups</li>
+        <li>White Label</li>
+        <li>Phone Support</li>
+      </ul>
+      <%= button_tag 'Sign up', type: :submit, class: "btn btn-warning btn-large", name: "provider", value: p['name'] %>
+    </div>
+  <% end %>
+<% end %>

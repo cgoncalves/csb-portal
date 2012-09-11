@@ -1,0 +1,57 @@
+<% content_for :main_content do %>
+  <div class="container"></div>
+  <div class="stripe">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="page-header">
+            <% if content_for? :page_title %>
+              <h1><%= yield :page_title %></h1>
+            <% else %>
+              <h1>Dashboard <small>frontend</small></h1>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="span2 well">
+          <ul class="nav nav-list">
+            <li class="nav-header">Profile</li>
+            <li><a href="#"><i class="icon-wrench"></i> Settings</a></li>
+            <li><a href="#"><i class="icon-user"></i> Privacy</a></li>
+            <li class="nav-header">Applications</li>
+            <li class="active">
+            <%= link_to apps_path do %>
+              <i class="icon-hdd icon-white"></i> My Apps
+            <% end %>
+            </li>
+            <li>
+            <%= link_to services_path do %>
+              <i class="icon-tasks"></i> Services
+            <% end %>
+            </li>
+            <li>
+            <%= link_to apps_path do %>
+              <i class="icon-list-alt"></i> Reports
+            <% end %>
+            </li>
+            <li class="nav-header">Billing</li>
+            <li>
+            <%= link_to apps_path do %>
+              <i class="icon-shopping-cart"></i> Pricing
+            <% end %>
+            </li>
+            <li class="divider"></li></li>
+            <li><a href="#"><i class="icon-flag"></i> Help</a></li>
+          </ul>
+        </div>
+        <div class="span9">
+          <%= yield :content %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render :template => 'layouts/application' %>
