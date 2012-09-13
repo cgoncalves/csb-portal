@@ -25,12 +25,6 @@ class App < CsbModel
     r.body
   end
 
-  def self.log(id)
-    r = CsbModel.conn.get "/csb/rest/apps/#{id}/log.json"
-    raise "#{r.status}: Something went wrong!" unless r.success?
-    Log.new(r.body)
-  end
-
   def self.start(id)
     r = CsbModel.conn.put "/csb/rest/apps/#{id}/start.json"
     r.success?
@@ -44,6 +38,16 @@ class App < CsbModel
   def self.restart(id)
     r = CsbModel.conn.put "/csb/rest/apps/#{id}/restart.json"
     r.success?
+  end
+
+  def self.log(id)
+    r = CsbModel.conn.get "/csb/rest/apps/#{id}/log.json"
+    Log.new(r.body)
+  end
+
+  def self.monitor(id)
+    r = CsbModel.conn.get "/csb/rest/apps/#{id}/monitor.json"
+    AppMonitor.new(r.body)
   end
 
   def start
@@ -60,6 +64,10 @@ class App < CsbModel
 
   def log
     self.class.log(id)
+  end
+
+  def monitor
+    self.class.monitor(id)
   end
 
   def save

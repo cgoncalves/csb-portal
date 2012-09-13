@@ -1,9 +1,8 @@
-<%= form_tag( {action: 'create'}, method: :post) do %>
- 
-  <% @providers.each do |p| %>
-  
-
-    	<table class="table table-striped">
+<% unless @providers.nil? || @providers.empty? %>
+  <%= form_tag( {action: 'create'}, method: :post) do %>
+    <%= hidden_field_tag 'manifest', @manifest.to_json %>
+    <%= hidden_field_tag 'id', @id %>
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Name</th>
@@ -13,6 +12,7 @@
         </tr>
       </thead>
       <tbody>
+        <% @providers.each do |p| %>
           <tr>
             <td><%= p['name'].humanize %></td>
             <td></td>
@@ -21,9 +21,8 @@
               <%= button_tag 'Sign up', type: :submit, class: "btn btn-info btn-large", name: "provider", value: p['name'] %>
             </td>
           </tr>
+        <% end %>
       </tbody>
     </table>
-    	
-      
   <% end %>
 <% end %>

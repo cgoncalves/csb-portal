@@ -1,8 +1,10 @@
 class Dashboard::ServicesController < DashboardController
+  layout false
+
   # GET /services
   # GET /services.json
   def index
-    @services = Service.all
+    @services = Service.all(params[:app_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,7 +78,7 @@ class Dashboard::ServicesController < DashboardController
     @service.destroy
 
     respond_to do |format|
-      format.html { redirect_to services_url }
+      format.html { redirect_to app_services_url }
       format.json { head :no_content }
     end
   end

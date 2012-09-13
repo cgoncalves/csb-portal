@@ -7,7 +7,8 @@ class Service < CsbModel
   def self.find(id)
   end
 
-  def self.all
+  def self.all(app_id)
+    []
   end
 
   def save

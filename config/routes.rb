@@ -7,10 +7,10 @@ CsbPortal::Application.routes.draw do
         put 'stop'
         put 'restart'
         get 'log'
-        get 'report'
+        get 'monitor'
       end
+      resources :services
     end
-    resources :services
   end
 
   scope "/dashboard" do
@@ -20,10 +20,10 @@ CsbPortal::Application.routes.draw do
         put 'stop'
         put 'restart'
         get 'log'
-        get 'report'
+        get 'monitor'
       end
+      resources :services
     end
-    resources :services
   end
 
   root :to => 'dashboard/apps#index'

@@ -117,19 +117,6 @@ class Dashboard::AppsController < DashboardController
     end
   end
 
-  def log
-    #@app = App.find(params[:id])
-    @log = App.log(params[:id])
-
-    respond_to do |format|
-      format.html { render partial: 'log' }
-      format.json { render json: @log }
-    end
-  end
-
-  def report
-  end
-
   def start
     @start = App.start(params[:id])
 
@@ -145,4 +132,23 @@ class Dashboard::AppsController < DashboardController
       format.js # stop.js.erb
     end
   end
+
+  def log
+    @log = App.log(params[:id])
+
+    respond_to do |format|
+      format.html { render partial: 'log' }
+      format.json { render json: @log }
+    end
+  end
+
+  def monitor
+    @monitor = App.monitor(params[:id])
+
+    respond_to do |format|
+      format.html { render partial: 'monitor' }
+      format.json { render json: @monitor }
+    end
+  end
+
 end

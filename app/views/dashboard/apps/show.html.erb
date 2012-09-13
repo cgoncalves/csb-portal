@@ -19,7 +19,7 @@
     <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Analytics <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li class=""><a href="#reports" data-toggle="tab">Reports</a></li>
+      <li class=""><a href="#monitor" data-toggle="tab">Monitor</a></li>
       <li class=""><a href="#logs" data-toggle="tab">Logs</a></li>
     </ul>
     </li>
@@ -59,7 +59,7 @@
     </div>
     <div class="tab-pane fade" id="migrate">
     </div>
-    <div class="tab-pane fade" id="reports">
+    <div class="tab-pane fade" id="monitor">
     </div>
     <div class="tab-pane fade" id="logs">
       <div class='spinner white outlined' data-spin='spinner'></div>
@@ -82,8 +82,11 @@
       if (contentID == '#logs') {
         $(contentID).load('<%= url_for log_app_path(@app) %>');
       }
-      else if (contentID == '#reports') {
-        $(contentID).load('<%= url_for report_app_path(@app) %>');
+      else if (contentID == '#monitor') {
+        $(contentID).load('<%= url_for monitor_app_path(@app) %>');
+      }
+      else if (contentID == '#services') {
+        $(contentID).load('<%= url_for app_services_path(@app) %>');
       }
     });
 
