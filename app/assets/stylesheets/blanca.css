@@ -33,15 +33,15 @@ blockquote p {
   background-color: #F6F6F6;
   background-image: none;
   box-shadow: none;
-  border-bottom: 4px solid #E6E6E6;
+  border-bottom: 4px solid #099DBA;
   padding: 4px 0px;
 	background-color: #2c2c2c;
-  background-image: -moz-linear-gradient(top, #F6F6F6, #F6F6F6);
-  background-image: -ms-linear-gradient(top, #F6F6F6, #F6F6F6);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F6F6F6), to(#F6F6F6));
-  background-image: -webkit-linear-gradient(top, #F6F6F6, #F6F6F6);
-  background-image: -o-linear-gradient(top, #F6F6F6, #F6F6F6);
-  background-image: linear-gradient(top, #F6F6F6, #F6F6F6);
+  background-image: -moz-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F6F6F6), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -o-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: linear-gradient(top, #F6F6F6, #e6e6e6);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F6F6F6', endColorstr='#F6F6F6', GradientType=0);
   -webkit-border-radius: 4px;
@@ -75,6 +75,14 @@ blockquote p {
 }
 #nav .nav .active > a,
 #nav .nav .active > a:hover {
+	background-image: -moz-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F6F6F6), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: -o-linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-image: linear-gradient(top, #F6F6F6, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F6F6F6', endColorstr='#F6F6F6', GradientType=0);
   background-color: #f6f6f6 !important;
   color: #555 !important;
 }
@@ -92,14 +100,14 @@ blockquote p {
 .dropdown-menu .active > a:hover {
   background-color: #333;
 }
-.well {
+.well, .well2 {
   box-shadow: none;
 }
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover,
 .nav-list > .active > a,
 .nav-list > .active > a:hover {
-  background-color: #333;
+  background-color: #019AAC;
 }
 footer h6 {
   margin-bottom: 8px;
@@ -176,19 +184,19 @@ footer .stripe-color {
 .btn-info {
   border-color: #2681a2 !important;
   background: #2caada;
-  background: -webkit-gradient(linear, left top, left bottom, from(#46cae8), to(#2caada));
-  background: -webkit-linear-gradient(top, #46cae8, #2caada);
-  background: -moz-linear-gradient(top, #46cae8, #2caada);
-  background: -ms-linear-gradient(top, #46cae8, #2caada);
-  background: -o-linear-gradient(top, #46cae8, #2caada);
+  background: -webkit-gradient(linear, left top, left bottom, from(#39c1d6), to(#019aac));
+  background: -webkit-linear-gradient(top, #39c1d6, #019aac);
+  background: -moz-linear-gradient(top, #39c1d6, #019aac);
+  background: -ms-linear-gradient(top, #39c1d6, #019aac);
+  background: -o-linear-gradient(top, #39c1d6, #019aac);
 }
 .btn-info:hover {
   background: #32bcef;
-  background: -webkit-gradient(linear, left top, left bottom, from(#50d6f5), to(#32bcef));
-  background: -webkit-linear-gradient(top, #50d6f5, #32bcef);
-  background: -moz-linear-gradient(top, #50d6f5, #32bcef);
-  background: -ms-linear-gradient(top, #50d6f5, #32bcef);
-  background: -o-linear-gradient(top, #50d6f5, #32bcef);
+  background: -webkit-gradient(linear, left top, left bottom, from(#019aac), to(#39c1d6));
+  background: -webkit-linear-gradient(top, #019aac, #39c1d6);
+  background: -moz-linear-gradient(top, #019aac, #39c1d6);
+  background: -ms-linear-gradient(top, #019aac, #39c1d6);
+  background: -o-linear-gradient(top, #019aac, #39c1d6);
 }
 .btn-info.disabled {
   background-color: #2caada;
@@ -368,6 +376,11 @@ article {
   box-shadow: 0px 1px 6px 3px #ccc;
   border: 1px solid #AAA !important;
 }
+
+#pricing-table td{
+	width:300px;
+}
+
 #pricing-table .span3 {
   margin-bottom: 10px;
 }
@@ -385,7 +398,7 @@ article {
 #pricing-table div {
   padding-top: 0px;
   background-color: #FFFEDF;
-  border: 1px solid #ffce4f;
+  border:none;
   margin-right: -2px;
 }
 #pricing-table h2 {
