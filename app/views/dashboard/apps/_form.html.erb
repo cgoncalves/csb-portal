@@ -1,58 +1,57 @@
+<%= form_tag( {action: 'new'}, method: :get, remote: true) do %>
+  <% if @app.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@app.errors.count, "error") %> prohibited this app from being saved:</h2>
 
-  <%= form_tag( {action: 'new'}, method: :get, remote: true) do %>
-    <% if @app.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@app.errors.count, "error") %> prohibited this app from being saved:</h2>
+      <ul>
+        <% @app.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-        <ul>
-          <% @app.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+  <div class="form-horizontal">
+    <fieldset>
+
+      <!-- Application name -->
+      <div class="control-group">
+        <label class="control-label" for="name">App ID</label>
+        <div class="controls">
+          <%= text_field_tag('id', nil, :placeholder => 'Application ID', :class => 'input-normal focused') %>
+        </div>
       </div>
-    <% end %>
 
-    <div class="form-horizontal">
-      <fieldset>
-
-        <!-- Application name -->
-        <div class="control-group">
-          <label class="control-label" for="name">App ID</label>
-          <div class="controls">
-            <%= text_field_tag('id', nil, :placeholder => 'Application ID', :class => 'input-normal focused') %>
-          </div>
+      <!-- Runtimes -->
+      <div class="control-group">
+        <label class="control-label" for="runtime">Runtime</label>
+        <div class="controls">
+          <%= select('manifest[runtime]', '', @runtimes.each.map {|r| ["#{r['name']} #{r['version']}", r['id']] }.sort, { :include_blank => true} ) %>
         </div>
+      </div>
 
-        <!-- Runtimes -->
-        <div class="control-group">
-          <label class="control-label" for="runtime">Runtime</label>
-          <div class="controls">
-            <%= select('manifest[runtime]', '', @runtimes.each.map {|r| ["#{r['name']} #{r['version']}", r['id']] }.sort, { :include_blank => true} ) %>
-          </div>
+      <!-- Frameworks -->
+      <div class="control-group">
+        <label class="control-label" for="framework">Framework</label>
+        <div class="controls">
+          <%= select('manifest[framework]', '', @frameworks.each.map {|f| ["#{f['name']} #{f['version']}", f['id']] }.sort, { :include_blank => true }) %>
         </div>
+      </div>
 
-        <!-- Frameworks -->
+      <div class="well2" id="rules">
         <div class="control-group">
-          <label class="control-label" for="framework">Framework</label>
+          <label class="control-label" for="appendRule">Additional rules</label>
           <div class="controls">
-            <%= select('manifest[framework]', '', @frameworks.each.map {|f| ["#{f['name']} #{f['version']}", f['id']] }.sort, { :include_blank => true }) %>
-          </div>
-        </div>
-
-        <div class="well2" id="rules">
-          <div class="control-group">
-            <label class="control-label" for="appendRule">Additional rules</label>
-            <div class="controls">
-              <div class="input-append">
-                <%= select('new_rule', 'id', @rules.each.map {|r| [r[:name], r[:id]] }.sort, { :include_blank => true}) %>
-                <button class="btn btn-small" type="button" id="add-rule">Add</button>
-              </div>
+            <div class="input-append">
+              <%= select('new_rule', 'id', @rules.each.map {|r| [r[:name], r[:id]] }.sort, { :include_blank => true}) %>
+              <button class="btn btn-small" type="button" id="add-rule">Add</button>
             </div>
           </div>
         </div>
-      </fieldset>
-    </div>
-  <% end %>
+      </div>
+    </fieldset>
+  </div>
+<% end %>
 <div id="pricing-table">
 </div>
 

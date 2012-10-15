@@ -1,16 +1,34 @@
-<%= form_tag(action: 'new') do %>
+<%= form_tag(action: 'create') do %>
   <% if @service.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@service.errors.count, "error") %> prohibited this service from being saved:</h2>
 
       <ul>
-      <% @service.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @service.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
+  <div class="form-horizontal">
+    <fieldset>
 
-  <div class="actions">
+      <div class="control-group">
+        <label class="control-label" for="name">Service ID</label>
+        <div class="controls">
+          <%= text_field_tag('id', nil, :placeholder => 'Service ID', :class => 'input-normal focused') %>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="control-group">
+        <label class="control-label" for="services">Services</label>
+        <div class="controls">
+          <%= select('vendor_id', nil, @services.each.map {|s| ["#{s['name']} #{s['version']}", s['id']] }.sort, { :include_blank => true} ) %>
+        </div>
+      </div>
+
+      <%= submit_tag 'Submit', class: 'btn btn-small' %>
+    </fieldset>
   </div>
 <% end %>

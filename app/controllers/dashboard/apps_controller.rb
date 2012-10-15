@@ -1,4 +1,4 @@
-require 'paas_providers'
+require 'paas_provider'
 require 'manifest'
 
 class Dashboard::AppsController < DashboardController
@@ -17,6 +17,7 @@ class Dashboard::AppsController < DashboardController
   # GET /apps/1.json
   def show
     @app = App.find(params[:id])
+    @paas_providers = PaasProvider.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,20 +40,25 @@ class Dashboard::AppsController < DashboardController
         end
       end
 
-      unless (params[:manifest][:runtime].all?(&:blank?) || params[:manifest][:framework].all?(&:blank?))
-        @providers = App.eval_manifest(@manifest)
-        @runtimes = PaasProviders.runtimes(providers: @providers)
-        @frameworks = PaasProviders.frameworks(providers: @providers)
-        @services = PaasProviders.services(providers: @providers)
-        @metrics = PaasProviders.metrics(providers: @providers)
+      #unless (params[:manifest][:runtime].all?(&:blank?) || params[:manifest][:framework].all?(&:blank?))
+      @providers = App.eval_manifest(@manifest)
+      unless @providers.empty?
+        @runtimes = PaasProvider.runtimes(@providers)
+        @frameworks = PaasProvider.frameworks(@providers)
+        @services = PaasProvider.service_vendors(@providers)
+        @metrics = PaasProvider.metrics(@providers)
       else
-        @providers = []
+        #@providers = []
+        @runtimes = PaasProvider.runtimes
+        @frameworks = PaasProvider.frameworks
+        @services = PaasProvider.service_vendors
+        @metrics = PaasProvider.metrics
       end
     else
-      @runtimes = PaasProviders.runtimes(:all)
-      @frameworks = PaasProviders.frameworks
-      @services = PaasProviders.services(:all)
-      @metrics = PaasProviders.metrics(:all)
+      @runtimes = PaasProvider.runtimes
+      @frameworks = PaasProvider.frameworks
+      @services = PaasProvider.service_vendors
+      @metrics = PaasProvider.metrics
     end
 
     @rules = []
@@ -143,11 +149,34 @@ class Dashboard::AppsController < DashboardController
   end
 
   def monitor
-    @monitor = App.monitor(params[:id])
+    samples = 100;
+    samples = params[:samples] unless params[:samples].nil?
+    @monitor = App.monitor(params[:id], samples)
+    puts "------------------------------------------"
+    puts @monitor
+    puts "------------------------------------------"
 
     respond_to do |format|
       format.html { render partial: 'monitor' }
       format.json { render json: @monitor }
+    end
+  end
+
+  def scale
+    App.scale(params[:id], params[:instances])
+
+    respond_to do |format|
+      format.html { redirect_to app_path(params[:id]), notice: "App was successfully scaled to #{params[:instances]} instances." }
+    end
+  end
+
+  def migrate
+    paas_provider = params[:paas_provider].pop
+    App.migrate(params[:id], paas_provider)
+
+    respond_to do |format|
+      format.html { render partial: 'migrate' }
+      format.html { redirect_to app_path(params[:id]), notice: "App was successfully migrated to #{paas_provider.humanize}." }
     end
   end
 

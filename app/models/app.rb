@@ -45,9 +45,19 @@ class App < CsbModel
     Log.new(r.body)
   end
 
-  def self.monitor(id)
-    r = CsbModel.conn.get "/csb/rest/apps/#{id}/monitor.json"
+  def self.scale(id, instances)
+    r = CsbModel.conn.put "/csb/rest/apps/#{id}/scale/#{instances}"
+    r.success?
+  end
+
+  def self.monitor(id, samples=10)
+    r = CsbModel.conn.get "/csb/rest/apps/#{id}/monitor.json?samples=#{samples}"
     AppMonitor.new(r.body)
+  end
+
+  def self.migrate(id, paas_provider)
+    r = CsbModel.conn.put "/csb/rest/apps/#{id}/migrate/#{paas_provider}.json"
+    r.success?
   end
 
   def start
@@ -66,8 +76,16 @@ class App < CsbModel
     self.class.log(id)
   end
 
-  def monitor
-    self.class.monitor(id)
+  def scale(instances)
+    self.class.scale(id, instances)
+  end
+
+  def monitor(samples=10)
+    self.class.monitor(id, samples)
+  end
+
+  def migrate(paas_provider)
+    self.class.migrate(id, paas_provider)
   end
 
   def save

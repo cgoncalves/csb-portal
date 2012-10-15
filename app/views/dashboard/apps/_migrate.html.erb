@@ -1,0 +1,12 @@
+<h3>Migrate your application</h3>
+<br/>
+<% unless @app.provider.nil? %>
+  <%= form_tag( {action: 'migrate'}, method: :put) do %>
+    <%= select('paas_provider', nil, @paas_providers.each.map {|p| [p.id.humanize, p.id] }.sort, { :selected => @app.provider.id} ) %>
+    <%= submit_tag 'Submit', class: 'btn btn-small' %>
+  <% end %>
+<% else %>
+  <div id="error_explanation" class="alert">
+    Migration is not possible at this point since your application hasn't been deployed to the cloud yet.
+  </div>
+<% end %>

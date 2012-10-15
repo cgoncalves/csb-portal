@@ -1,1 +1,18 @@
-$("#pricing-table").html("<%= escape_javascript(render partial: 'suggested_providers')%>");                     
+$("#pricing-table").html("<%= escape_javascript(render partial: 'suggested_providers')%>");
+
+<% if false %>
+var framework_selected_val = $("#manifest_framework_ option:selected").val();
+$("#manifest_framework_").html("<%= escape_javascript(select('manifest[framework]', '', @frameworks.each.map {|f| ["#{f['name']} #{f['version']}", f['id']] }.sort, { :include_blank => true })) %>");
+if (framework_selected_val) {
+  var exists = false;
+  $("#manifest_framework_ option").each(function() {
+    if (this.value == framework_selected_val) {
+      exists = true;
+      break;
+    }
+  });
+  if (exists)
+    $("#manifest_framework_").val(framework_selected_val).attr('selected', true);
+  }
+}
+<% end %>

@@ -14,11 +14,11 @@
       <tbody>
         <% @providers.each do |p| %>
           <tr>
-            <td><%= p['name'].humanize %></td>
+            <td><%= p['id'].humanize %></td>
             <td></td>
             <td></td>
             <td>
-              <%= button_tag 'Sign up', type: :submit, class: "btn btn-info btn-large", name: "provider", value: p['name'] %>
+              <%= button_tag 'Sign up', type: :submit, class: "btn btn-info btn-large", name: "provider", value: p['id'] %>
             </td>
           </tr>
         <% end %>

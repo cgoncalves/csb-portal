@@ -6,6 +6,8 @@ CsbPortal::Application.routes.draw do
         put 'start'
         put 'stop'
         put 'restart'
+        put 'scale'
+        put 'migrate'
         get 'log'
         get 'monitor'
       end
@@ -19,6 +21,8 @@ CsbPortal::Application.routes.draw do
         put 'start'
         put 'stop'
         put 'restart'
+        put 'scale'
+        put 'migrate'
         get 'log'
         get 'monitor'
       end
