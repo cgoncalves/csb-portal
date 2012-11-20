@@ -21,13 +21,41 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= select('metric', 'name', instance.metrics.each.map {|m| [m.name.humanize, m.name] }.sort, class: 'input-small') %>
 <% end %>
 
 <div id="container-chart" style="height: 200; min-width: 200"></div>
 
 <script>
+  var data2 = [];
+  var data3 = [];
+  function loadSerie() {
+    $.getJSON("facebruk/monitor.json?samples=99", function(data) {
+      data2 = data;
+    });
+  }
+
+
+  $('#metric_name').change(function() {
+    //loadSerie('1', $(this).attr('value'));
+    var instance = '1';
+    var metric = $(this).attr('value');
+    $.each(data2.instances, function(i, v) {
+      if(v.id == instance) {
+        data3 = [];
+        $.each($.grep(v.metrics, function(n, ii) { return n.name == metric; })[0].entries.reverse(), function(iii, k) {
+          data3.push([parseInt(k.date) * 1000, parseInt(k.value)]);
+          //data3.push(parseInt(k.value));
+
+        });
+        chart.series[0].setData(data3, true);
+      }
+    });
+  });
 
   $(function() {
+    loadSerie();
 
     Highcharts.setOptions({
       global : {
@@ -47,16 +75,6 @@
 
             // set up the updating of the chart each second
             var series = this.series[0];
-            setInterval(function() {
-            //  var x = 1348838434, // current time
-            //  y = 100;
-            //  //y = Math.round(Math.random() * 100);
-            //  //y = <% @monitor.instances.first.metrics.first["entries"][5].value %>;
-            //$.getJSON('monitor.json?samples=1', function(data) {
-              
-            //}
-              //series.addPoint([x, y], true, true);
-            }, 1000);
           }
         }
       },
@@ -90,19 +108,20 @@
         name : 'Random data',
         data : (function() {
           // generate an array of random data
-          var data = [], time = (new Date()).getTime(), i;
+          var data = [];
 
-            <% @monitor.instances[0].metrics[5]["entries"].reverse!.each do |entry| %>
-              data.push([
-              <%= Integer(entry.date) * 1000 %>,
-              <%= entry.value %>
-              ]);
-            <% end %>
+          <% @monitor.instances[0].metrics[5]["entries"].reverse!.each do |entry| %>
+            data.push([
+            <%= Integer(entry.date) * 1000 %>,
+            <%= entry.value %>
+            ]);
+          <% end %>
 
           return data;
         })()
       }]
     });
+    //loadSerie('1', 'memory');
 
   });
 </script>

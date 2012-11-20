@@ -152,9 +152,6 @@ class Dashboard::AppsController < DashboardController
     samples = 100;
     samples = params[:samples] unless params[:samples].nil?
     @monitor = App.monitor(params[:id], samples)
-    puts "------------------------------------------"
-    puts @monitor
-    puts "------------------------------------------"
 
     respond_to do |format|
       format.html { render partial: 'monitor' }
