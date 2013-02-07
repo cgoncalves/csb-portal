@@ -30,7 +30,7 @@ CsbPortal::Application.routes.draw do
     end
   end
 
-  root :to => 'dashboard/apps#index'
+  root :to => 'pages#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
