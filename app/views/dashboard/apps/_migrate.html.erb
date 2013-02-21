@@ -1,8 +1,8 @@
 <h3>Migrate your application</h3>
 <br/>
-<% unless @app.provider.nil? %>
+<% unless @app['provider'].nil? %>
   <%= form_tag( {action: 'migrate'}, method: :put) do %>
-    <%= select('paas_provider', nil, @paas_providers.each.map {|p| [p.id.humanize, p.id] }.sort, { :selected => @app.provider.id} ) %>
+    <%= select('paas_provider', nil, @paas_providers.each.map {|p| [p['id'].humanize, p['id']] }.sort, { :selected => @app['provider']['id']} ) %>
     <%= submit_tag 'Submit', class: 'btn btn-small' %>
   <% end %>
 <% else %>

@@ -1,11 +1,10 @@
-require 'paas_provider'
-require 'manifest'
-
 class Dashboard::AppsController < DashboardController
+  before_filter :authenticate_user!
+
   # GET /apps
   # GET /apps.json
   def index
-    @apps = App.all
+    @apps = @client.apps
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,8 +15,8 @@ class Dashboard::AppsController < DashboardController
   # GET /apps/1
   # GET /apps/1.json
   def show
-    @app = App.find(params[:id])
-    @paas_providers = PaasProvider.all
+    @app = @client.app(params[:id])
+    @paas_providers = cached_providers
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,37 +27,35 @@ class Dashboard::AppsController < DashboardController
   # GET /apps/new
   # GET /apps/new.json
   def new
-    @app = App.new
+    @app = {}
 
     if (params[:manifest])
       @id = params[:id]
-      @manifest = Manifest.new
-      @manifest[:rules] = []
+      @manifest = {}
+      @manifest['rules'] = []
       params[:manifest].each do |r|
         r[1].each do |v|
-          @manifest[:rules].push( {:name => r[0], :params => [v]} ) unless v.empty?
+          @manifest['rules'].push( {:name => r[0], :params => [v]} ) unless v.empty?
         end
       end
 
       #unless (params[:manifest][:runtime].all?(&:blank?) || params[:manifest][:framework].all?(&:blank?))
-      @providers = App.eval_manifest(@manifest)
+      @providers = @client.eval_manifest(@manifest)
       unless @providers.empty?
-        @runtimes = PaasProvider.runtimes(@providers)
-        @frameworks = PaasProvider.frameworks(@providers)
-        @services = PaasProvider.service_vendors(@providers)
-        @metrics = PaasProvider.metrics(@providers)
+        @frameworks = @client.providers_frameworks(@providers)
+        @services = @client.providers_service_vendors(@providers)
+        @metrics = @client.providers_metrics(@providers)
       else
-        #@providers = []
-        @runtimes = PaasProvider.runtimes
-        @frameworks = PaasProvider.frameworks
-        @services = PaasProvider.service_vendors
-        @metrics = PaasProvider.metrics
+        @runtimes = @client.providers_runtimes(cached_providers)
+        @frameworks = @client.providers_frameworks(cached_providers)
+        @services = @client.providers_service_vendors(cached_providers)
+        @metrics = @client.providers_metrics(cached_providers)
       end
     else
-      @runtimes = PaasProvider.runtimes
-      @frameworks = PaasProvider.frameworks
-      @services = PaasProvider.service_vendors
-      @metrics = PaasProvider.metrics
+      @runtimes = @client.providers_runtimes(cached_providers)
+      @frameworks = @client.providers_frameworks(cached_providers)
+      @services = @client.providers_service_vendors(cached_providers)
+      @metrics = @client.providers_metrics(cached_providers)
     end
 
     @rules = []
@@ -74,34 +71,35 @@ class Dashboard::AppsController < DashboardController
 
   # GET /apps/1/edit
   def edit
-    @app = App.find(params[:id])
+    @app = @client.app(params[:id])
   end
 
   # POST /apps
   # POST /apps.json
   def create
-    @app = App.new(params[:id])
-    @app.manifest = Manifest.new(JSON.parse(params[:manifest]))
-    @app.manifest.provider = params[:provider]
+    manifest = JSON.parse(params[:manifest])
+    manifest['provider'] = params[:provider]
+    @client.app_create(params[:id], manifest)
 
     respond_to do |format|
-      if @app.save
-        format.html { redirect_to app_path(@app.id), notice: 'App was successfully created.' }
-        format.json { render json: @app, status: :created, location: @app }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @app.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to app_path(params[:id]), notice: 'App was successfully created.' }
+      #if @client.app_create(params[:id], manifest)
+      #  format.html { redirect_to app_path(params[:id]), notice: 'App was successfully created.' }
+      #  #  FIXME format.json { render json: @app, status: :created, location: app_path(params[:id]) } 
+      #else
+      #  format.html { render action: "new" }
+      #  format.json { render json: @app.errors, status: :unprocessable_entity } # FIXME
+      #end
     end
   end
 
   # PUT /apps/1
   # PUT /apps/1.json
   def update
-    @app = App.find(params[:id])
+    @app = @client.app(params[:id])
 
     respond_to do |format|
-      if @app.update_attributes(params[:app])
+      if @app.update_attributes(params[:app]) # FIXME
         format.html { redirect_to @app, notice: 'App was successfully updated.' }
         format.json { head :no_content }
       else
@@ -114,8 +112,7 @@ class Dashboard::AppsController < DashboardController
   # DELETE /apps/1
   # DELETE /apps/1.json
   def destroy
-    @app = App.find(params[:id])
-    @app.destroy
+    @client.app_destory(params[:id])
 
     respond_to do |format|
       format.html { redirect_to apps_url }
@@ -124,7 +121,7 @@ class Dashboard::AppsController < DashboardController
   end
 
   def start
-    @start = App.start(params[:id])
+    @start = @client.app_start(params[:id])
 
     respond_to do |format|
       format.js # start.js.erb
@@ -132,7 +129,7 @@ class Dashboard::AppsController < DashboardController
   end
 
   def stop
-    @stop = App.stop(params[:id])
+    @stop = @client.app_stop(params[:id])
 
     respond_to do |format|
       format.js # stop.js.erb
@@ -140,7 +137,7 @@ class Dashboard::AppsController < DashboardController
   end
 
   def log
-    @log = App.log(params[:id])
+    @log = @client.app_log(params[:id])
 
     respond_to do |format|
       format.html { render partial: 'log' }
@@ -151,7 +148,7 @@ class Dashboard::AppsController < DashboardController
   def monitor
     samples = 100;
     samples = params[:samples] unless params[:samples].nil?
-    @monitor = App.monitor(params[:id], samples)
+    @monitor = @client.app_monitor(params[:id], samples)
 
     respond_to do |format|
       format.html { render partial: 'monitor' }
@@ -160,7 +157,7 @@ class Dashboard::AppsController < DashboardController
   end
 
   def scale
-    App.scale(params[:id], params[:instances])
+    @client.app_scale(params[:id], params[:instances])
 
     respond_to do |format|
       format.html { redirect_to app_path(params[:id]), notice: "App was successfully scaled to #{params[:instances]} instances." }
@@ -169,7 +166,7 @@ class Dashboard::AppsController < DashboardController
 
   def migrate
     paas_provider = params[:paas_provider].pop
-    App.migrate(params[:id], paas_provider)
+    @client.app_migrate(params[:id], paas_provider)
 
     respond_to do |format|
       format.html { render partial: 'migrate' }

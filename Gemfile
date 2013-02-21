@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
-gem 'faraday', '0.8.4'
-gem 'faraday_middleware', '0.9.0'
-gem "hashie", :git => "git://github.com/intridea/hashie.git", :branch => "master"
-gem "google-code-prettify-rails"
+gem 'omniauth'
+gem 'omniauth-csb', :path => "../gems/omniauth-csb/"
+gem 'csb', :path => "../gems/csb/"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -1,21 +1,26 @@
-<h2>Listing services</h2>
+<% unless @services.empty? %>
+  <h2>Listing services</h2>
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <% @services.each do |service| %>
+      <tr>
+        <td><%= link_to service['id'], dashboard_app_service_path(params[:app_id], service['id']) %></td>
+        <td><%= link_to 'Edit', edit_dashboard_app_service_path(params[:app_id], service['id']) %></td>
+        <td><%= link_to 'Destroy', app_dashboard_service_path(params[:app_id], service['id']), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
 
-<% @services.each do |service| %>
-  <tr>
-    <td><%= link_to service.id, app_service_path(params[:app_id], service) %></td>
-    <td><%= link_to 'Edit', edit_app_service_path(params[:app_id], service) %></td>
-    <td><%= link_to 'Destroy', app_service_path(params[:app_id], service), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+  <br />
+
+  <%= link_to 'New Service', new_dashboard_app_service_path %>
+<% else %>
+  <div id="error_explanation" class="alert">
+    Creation of services is only possible once you have deployed your application to the Cloud.
+  </div>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Service', new_app_service_path %>

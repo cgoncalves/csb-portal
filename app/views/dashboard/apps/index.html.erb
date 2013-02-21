@@ -5,7 +5,6 @@
 <% content_for :content do %>
   <% if @apps.empty? %>
     <div class="alert alert-block">
-      <button class="close" data-dismiss="alert">×</button>
       <h4 class="alert-heading">No applications! <small>Nada! Nil! Zarro!</small></h4>
       <p></p>
       <p>No applications have been created yet. What are you waiting for? Create a new application and upload it easily to CSB.<br/><strong>We will promptly deploy it to the best Cloud!</strong></p>
@@ -23,15 +22,15 @@
       <tbody>
         <% @apps.each do |app| %>
           <tr>
-            <td><%= link_to app.id, app_path(app) %></td>
-            <td><%= (app.provider.nil?) ? ("<span class=\"label\">Undeployed</span>".html_safe) : app.provider.id.humanize %></td>
-            <td><%= (app.status.nil?) ? ("<span class=\"label label-important\">Unknown</span>".html_safe) : app.status.humanize %></td>
+            <td><%= link_to app['id'], app_path(app['id']) %></td>
+            <td><%= (app['provider'].nil?) ? ("<span class=\"label\">Undeployed</span>".html_safe) : app['provider']['id'].humanize %></td>
+            <td><%= (app['status'].nil?) ? ("<span class=\"label label-important\">Unknown</span>".html_safe) : app['status'].humanize %></td>
             <td>
               <div class="btn-group">
-                <%= link_to app.url, class: 'btn btn-success', target: "_blank" do %>
+                <%= link_to app['url'], class: 'btn btn-success', target: "_blank" do %>
                   <i class="icon-globe icon-white"></i> Visit site
                 <% end %>
-                <%= link_to app_path(app), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' do %>
+                <%= link_to app_path(app['id']), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' do %>
                   <i class="icon-trash icon-white"></i> Delete
                 <% end %>
               </div>

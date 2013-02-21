@@ -1,6 +1,6 @@
 <h3>Scale your application</h3>
 <br/>
 <%= form_tag( {action: 'scale'}, method: :put) do %>
-  <%= number_field_tag 'instances', @app.instances, min: 1, class: 'input-mini' %>
+  <%= number_field_tag 'instances', @app['instances'], min: 1, class: 'input-mini' %>
   <%= submit_tag 'Submit', class: 'btn btn-small' %>
 <% end %>

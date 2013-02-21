@@ -36,14 +36,30 @@
               </li>
             </ul>
             <ul class="nav pull-right">
-              <li><a href="">Sign Up</a></li>
-              <li><a href="">Login</a></li>
+              <% if user_signed_in? %>
+                <li><%= link_to "Settings", services_path %></li>
+                <li><%= link_to "Sign out", signout_services_path %></li>
+              <% else %>
+                <li><%= link_to "Sign up", signup_services_path %></li>
+                <li><%= link_to "Sign in", "/auth/csb" %></li>
+              <% end %>
             </ul>
           </div>
         </div>
       </div>
     </div>
+    
+    <div class="container">
+      <% flash.each do |name, msg| %>
+        <div class="alert alert-<%= name %>">
+          <button class="close" data-dismiss="alert">×</button>
+          <strong><%= name.to_s.titleize %></strong><br><%= msg %>
+      </div>
+    <% end %>
+  </div>
+
     <%= yield :main_content %>
+
     <footer>
     <div id="footer" class="stripe-color">
       <div class="container">

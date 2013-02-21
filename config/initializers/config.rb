@@ -1,0 +1,6 @@
+APP_CONFIG = YAML.load_file("#{Rails.root}/config/config.yaml")[Rails.env]
+CSB_CONSUMER_KEY = APP_CONFIG['consumer_key']
+CSB_CONSUMER_SECRET = APP_CONFIG['consumer_secret']
+CSB_PORTAL_TOKEN = APP_CONFIG['portal_token']
+CSB_PORTAL_SECRET = APP_CONFIG['portal_secret']
+PROVIDERS_EXPIRE_IN = APP_CONFIG['providers_expire_in']

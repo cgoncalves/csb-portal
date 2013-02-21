@@ -1,10 +1,9 @@
 <%= form_tag( {action: 'new'}, method: :get, remote: true) do %>
-  <% if @app.errors.any? %>
+  <% if @csb_error and @csb_error.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@app.errors.count, "error") %> prohibited this app from being saved:</h2>
-
+      <h2><%= pluralize(@csb_error.errors.count, "error") %> prohibited this app from being saved:</h2>
       <ul>
-        <% @app.errors.full_messages.each do |msg| %>
+        <% @csb_error.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -13,7 +12,6 @@
 
   <div class="form-horizontal">
     <fieldset>
-
       <!-- Application name -->
       <div class="control-group">
         <label class="control-label" for="name">App ID</label>

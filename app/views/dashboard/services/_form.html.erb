@@ -1,10 +1,9 @@
 <%= form_tag(action: 'create') do %>
-  <% if @service.errors.any? %>
+  <% if @csb_error and @csb_error.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@service.errors.count, "error") %> prohibited this service from being saved:</h2>
-
+      <h2><%= pluralize(@csb_error.errors.count, "error") %> prohibited this service from being saved:</h2>
       <ul>
-        <% @service.errors.full_messages.each do |msg| %>
+        <% @csb_error.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -12,7 +11,6 @@
   <% end %>
   <div class="form-horizontal">
     <fieldset>
-
       <div class="control-group">
         <label class="control-label" for="name">Service ID</label>
         <div class="controls">

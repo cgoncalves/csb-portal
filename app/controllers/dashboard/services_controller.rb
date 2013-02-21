@@ -4,8 +4,8 @@ class Dashboard::ServicesController < DashboardController
   # GET /services
   # GET /services.json
   def index
-    @services = Service.all(params[:app_id])
-    @app = App.find(params[:app_id])
+    @services = @client.services(params[:app_id])
+    @app = @client.app(params[:app_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class Dashboard::ServicesController < DashboardController
   # GET /services/1
   # GET /services/1.json
   def show
-    @service = Service.find(params[:id], params[:app_id])
+    @service = @client.service(params[:id], params[:app_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -27,10 +27,14 @@ class Dashboard::ServicesController < DashboardController
   # GET /services/new
   # GET /services/new.json
   def new
-    @service = Service.new
-    @app = App.find(params[:app_id])
-    provider = PaasProvider.find(@app.provider.id)
-    @services = provider.service_vendors
+    @service = {}
+    @app = @client.app(params[:app_id])
+
+    @services = {}
+    if @app['provider']
+      provider = cached_provider(@app['provider']['id'])
+      @services = provider['service_vendors']
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,8 +44,8 @@ class Dashboard::ServicesController < DashboardController
 
   # GET /services/1/edit
   def edit
-    @service = Service.find(params[:id], params[:app_id])
-    @app = App.find(params[:app_id])
+    @service = @client.service(params[:id], params[:app_id])
+    @app = @client.app(params[:app_id])
 
     respond_to do |format|
       format.html # edit.html.erb
@@ -55,7 +59,7 @@ class Dashboard::ServicesController < DashboardController
   def create
     @service = Service.new(params[:id])
     @service.app_id = params[:app_id]
-    @service.vendor_id = params[:vendor_id].pop
+    @service['vendor_id'] = params[:vendor_id].pop
 
     respond_to do |format|
       if @service.save

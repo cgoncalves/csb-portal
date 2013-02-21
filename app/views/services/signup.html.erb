@@ -1,0 +1,53 @@
+<% content_for :page_title do %>
+  Sign up <small>be to in the cloud</small>
+<% end %>
+
+<% content_for :content do %>
+  <div class="container">
+    <% if @csb_error.errors.any? %>
+      <div id="error_explanation">
+        <strong><%= pluralize(@csb_error.errors.count, "error") %> prohibited you from signing up:</strong>
+        <ul>
+          <% @csb_error.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_tag( {action: 'newaccount'} ) do %>
+      <div class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="name">Username</label>
+            <div class="controls">
+              <%= text_field_tag('name', nil, :placeholder => 'Username', :class => 'input-normal focused') %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+              <%= email_field_tag('email', nil, :placeholder => 'name@example.com', :class => 'input-normal') %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <%= password_field_tag('password', nil, :class => 'input-normal') %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password_confirmation">Password Confirmation</label>
+            <div class="controls">
+              <%= password_field_tag('password_confirmation', nil, :class => 'input-normal') %>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag "Sign me up!", class: 'btn' %>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+  </div>
+<% end %>
