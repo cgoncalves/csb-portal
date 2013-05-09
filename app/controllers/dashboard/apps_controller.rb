@@ -27,7 +27,7 @@ class Dashboard::AppsController < DashboardController
   # GET /apps/new
   # GET /apps/new.json
   def new
-    @app = {}
+    @repository_types = [ ['Git', 'git'], ['SVN', 'svn'] ]
 
     if (params[:manifest])
       @id = params[:id]
@@ -79,7 +79,8 @@ class Dashboard::AppsController < DashboardController
   def create
     manifest = JSON.parse(params[:manifest])
     manifest['provider'] = params[:provider]
-    @client.app_create(params[:id], manifest)
+    @client.app_create(params[:id], params[:repository_type])
+    @client.app_add_manifest(params[:id], manifest)
 
     respond_to do |format|
       format.html { redirect_to app_path(params[:id]), notice: 'App was successfully created.' }
