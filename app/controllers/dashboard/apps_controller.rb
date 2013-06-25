@@ -31,6 +31,7 @@ class Dashboard::AppsController < DashboardController
 
     if (params[:manifest])
       @id = params[:id]
+      @repository_type = params[:repository_type]
       @manifest = {}
       @manifest['rules'] = []
       params[:manifest].each do |r|
@@ -40,6 +41,9 @@ class Dashboard::AppsController < DashboardController
       end
 
       #unless (params[:manifest][:runtime].all?(&:blank?) || params[:manifest][:framework].all?(&:blank?))
+      puts "----------------------------------------------------------------"
+      puts @manifest.to_json
+      puts "----------------------------------------------------------------"
       @providers = @client.eval_manifest(@manifest)
       unless @providers.empty?
         @frameworks = @client.providers_frameworks(@providers)
@@ -79,6 +83,7 @@ class Dashboard::AppsController < DashboardController
   def create
     manifest = JSON.parse(params[:manifest])
     manifest['provider'] = params[:provider]
+    puts "Repository type: #{params[:repository_type]}"
     @client.app_create(params[:id], params[:repository_type])
     @client.app_add_manifest(params[:id], manifest)
 
@@ -113,7 +118,7 @@ class Dashboard::AppsController < DashboardController
   # DELETE /apps/1
   # DELETE /apps/1.json
   def destroy
-    @client.app_destory(params[:id])
+    @client.app_destroy(params[:id])
 
     respond_to do |format|
       format.html { redirect_to apps_url }

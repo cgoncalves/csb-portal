@@ -5,7 +5,6 @@ class Dashboard::ServicesController < DashboardController
   # GET /services.json
   def index
     @services = @client.services(params[:app_id])
-    @app = @client.app(params[:app_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -57,17 +56,12 @@ class Dashboard::ServicesController < DashboardController
   # POST /services
   # POST /services.json
   def create
-    @service = Service.new(params[:id])
-    @service.app_id = params[:app_id]
-    @service['vendor_id'] = params[:vendor_id].pop
+    @client.service_create(params[:id], params[:app_id], params[:vendor_id].pop)
+    @service = @client.service(params[:id], params[:app_id])
 
     respond_to do |format|
-      if @service.save
-        format.html { redirect_to app_service_path(@service.app_id, @service.id), notice: 'Service was successfully created.' }
-        format.json { render json: @service, status: :created, location: @service }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @service.errors, status: :unprocessable_entity }
+        format.html { redirect_to app_service_path(@service['app_id'], @service['id']), notice: 'Service was successfully created.' }
+        #format.json { render json: @service, status: :created, location: @service }
       end
     end
   end

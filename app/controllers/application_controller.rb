@@ -28,18 +28,32 @@ class ApplicationController < ActionController::Base
     @client = Csb::Client.new(options)
   end
 
-  def current_user  
-    @current_user ||= @client.user if session[:oauth_token] and session[:oauth_secret]
+  def current_user
+    if session[:oauth_token] and session[:oauth_secret]
+      begin
+        @current_user ||= @client.user
+      rescue
+        session[:oauth_token] = nil
+        session[:oauth_secret] = nil
+        session.delete :oauth_token
+        session.delete :oauth_secret
+        return nil
+      end
+    end
   end
 
   def user_signed_in?
-    return 1 if current_user 
+    begin
+    return 1 if current_user && @client.user
+    rescue
+      return 0
+    end
   end
 
   def authenticate_user!
     if !current_user
       flash[:error] = 'You need to sign in before accessing this page!'
-      redirect_to signin_services_path
+      redirect_to "/auth/csb"
     end
   end
 end

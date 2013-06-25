@@ -2,6 +2,7 @@
   <%= form_tag( {action: 'create'}, method: :post) do %>
     <%= hidden_field_tag 'manifest', @manifest.to_json %>
     <%= hidden_field_tag 'id', @id %>
+    <%= hidden_field_tag 'repository_type', @repository_type %>
     <table class="table table-striped">
       <thead>
         <tr>

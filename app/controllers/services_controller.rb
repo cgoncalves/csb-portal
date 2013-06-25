@@ -13,8 +13,8 @@ class ServicesController < ApplicationController
     admin = Csb::Client.new(
       :consumer_key    => CSB_CONSUMER_KEY,
       :consumer_secret => CSB_CONSUMER_SECRET,
-      :token           => CSB_PORTAL_TOKEN,
-      :secret          => CSB_PORTAL_SECRET
+      :oauth_token     => CSB_PORTAL_TOKEN,
+      :oauth_token_secret    => CSB_PORTAL_SECRET
     )
 
     @csb_error = CsbError.new
@@ -26,7 +26,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @csb_error.errors.empty?
-        format.html { redirect_to signin_services_path }
+        format.html { redirect_to root_path }
       else
         format.html { render action: 'signup' }
       end

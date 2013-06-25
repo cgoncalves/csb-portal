@@ -17,10 +17,12 @@
   </table>
 
   <br />
+<% end %>
 
-  <%= link_to 'New Service', new_dashboard_app_service_path %>
-<% else %>
+<% if @app['provider'].nil? %>
   <div id="error_explanation" class="alert">
     Creation of services is only possible once you have deployed your application to the Cloud.
   </div>
+<% else %>
+  <%= link_to 'New Service', new_dashboard_app_service_path %>
 <% end %>

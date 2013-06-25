@@ -31,7 +31,7 @@
         <dt>Application ID</dt>
         <dd><%= @app['id'] %></dd>
         <dt>Framework</dt>
-        <dd><%= (@app['framework'].nil?) ? '-' : @app['framework'].titleize %></dd>
+        <dd><%= (@app['framework_id'].nil?) ? '-' : @app['framework_id'].titleize %></dd>
         <dt>Provider</dt>
         <dd><%= (@app['provider'].nil?) ? ("<span class=\"label\">Undeployed</span>".html_safe) : @app['provider']['id'].humanize %></dd>
         <dt>Status</dt>
